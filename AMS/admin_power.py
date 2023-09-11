@@ -66,7 +66,6 @@ def format_date(date):
     day = date_obj.day
     return datetime(year, month, day)
            
-
 def check_expire(coupon_id):
     coupon = get_entity(coupon_id)
     if coupon and coupon['expire_date'] > datetime.now():

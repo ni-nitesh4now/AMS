@@ -19,6 +19,36 @@ const Dashboard = () => {
   const [teacherActive, setTeacherActive] = useState(false);
   const [parentActive, setParentActive] = useState(false);
   const [managementActive, setManagementActive] = useState(false);
+  const [apiData, setApiData] = useState({}); // State to store API data
+
+  // Fetch data from Flask API based on the active category
+  useEffect(() => {
+    const fetchData = async () => {
+      const category = allActive
+        ? "All"
+        : studentActive
+        ? "Student"
+        : teacherActive
+        ? "Teacher"
+        : parentActive
+        ? "Parent"
+        : managementActive
+        ? "Management"
+        : "All";
+      try {
+        const response = await fetch(`/subscriptions?category=${category}`); // Replace with your API endpoint URL
+        if (!response.ok) {
+          throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setApiData(data); // Update the state with the received data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData(); // Call the function to fetch data when the component mounts and when the active category changes
+  }, [allActive, studentActive, teacherActive, parentActive, managementActive]);
 
   const toggleButton = (button) => {
     setAllActive(button === "All");

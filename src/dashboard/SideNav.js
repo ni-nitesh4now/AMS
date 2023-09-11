@@ -88,7 +88,7 @@ const SideNav = ({ xyz }) => {
       path: "/coupon",
       name: "Coupon",
       icon: <FaMoneyBill />,
-      active:xyz===""?true: false, 
+      active:xyz==="coupon"?true: false, 
     },
     {
       path: "/billing",
