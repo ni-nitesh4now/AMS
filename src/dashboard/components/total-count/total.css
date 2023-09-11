@@ -215,11 +215,13 @@
     position: relative;
   }
   
+  
   .small-text{
     width: 13rem;
     font-size: 9px;
     margin-top: 4rem;
-    margin-left: 6rem;
+    margin-left: 0.4rem;
+    color: black;
   }
   
   .rectangle,.rectangle-2,.rectangle-3,.rectangle-4{
