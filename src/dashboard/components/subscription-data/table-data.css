@@ -14,7 +14,7 @@ body {
   font-weight: bold;
   left: 3rem;
 }
-
+ 
 :where(.css-dev-only-do-not-override-18iikkb).ant-tag-red {
   color: white;
   background: rgba(241, 144, 144, 1);
