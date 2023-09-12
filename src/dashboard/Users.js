@@ -4,10 +4,10 @@ import Total from "./components/total-count/Total";
 
 function Users() {
   return (
-    <div className="main-div">
+    <div className="main-div" style={{ backgroundColor: "#eff3f4" }}>
       <SideNav xyz={"users"} />
-      <Total/>
-      <TableData/>
+      <Total />
+      <TableData />
     </div>
   );
 }

@@ -34,10 +34,10 @@ const Coupon = () => {
       setActiveCardIndex(index);
     }
   };
-
+  console.log("data length:", data);
   return (
     <div className="coupon-screen">
-      <SideNav xyz={"coupon"}/>
+      <SideNav xyz={"coupon"} />
       <div className="group-11">
         <img className="profile" alt="Rectangle" src={RectangleImage} />
         <div className="notification-wrapper">
@@ -45,43 +45,37 @@ const Coupon = () => {
         </div>
       </div>
       <div className="text-wrapper-7">Coupon</div>
-      <div className="coupon-filter">
-        <div className="coupon-card-topp">
-          <div
-            className={`coupon-card-wrap-4 ${allActive ? "active" : ""}`}
-            onClick={() => toggleButton("All")}
-          >
-            <div className="text-wrapper-13">All</div>
-          </div>
-          <div
-            className={`coupon-card-wrap-4 ${Active ? "active" : ""}`}
-            onClick={() => toggleButton("Active")}
-          >
-            <div className="text-wrapper-13">Active</div>
-          </div>
-          <div
-            className={`coupon-card-wrap-4 ${Expired ? "active" : ""}`}
-            onClick={() => toggleButton("Expired")}
-          >
-            <div className="text-wrapper-13">Expired</div>
-          </div>
+      <div className="card-top">
+        <div
+          className={`card-wrap-4 ${allActive ? "active" : ""}`}
+          onClick={() => toggleButton("All")}
+        >
+          <div className="text-wrapper-13">All</div>
         </div>
-        <div className="coupon-input-container">
-          <i className="fa fa-search search-icon"></i>
-          <input
-            type="text"
-            placeholder="Search User"
-            className="input-field"
-          />
+        <div
+          className={`card-wrap-4 ${Active ? "active" : ""}`}
+          onClick={() => toggleButton("Active")}
+        >
+          <div className="text-wrapper-13">Active</div>
+        </div>
+        <div
+          className={`card-wrap-4 ${Expired ? "active" : ""}`}
+          onClick={() => toggleButton("Expired")}
+        >
+          <div className="text-wrapper-13">Expired</div>
         </div>
       </div>
-
-      {/* <div className="input-wrapper">
-        <input type="text" className="input-field" placeholder="Search user" />
-      </div> */}
-      <Row className="coupon-card">
+      <div className="input-wrapper">
+        <input
+          type="text"
+          className="input-field-coupon"
+          placeholder="Search user"
+        />
+      </div>
+      {/* <div> */}
+      <di className="coupon-card">
         <Col md={3}>
-          <Card className="subscription-coupon-card-create">
+          <div className="subscription-card-create">
             <button className="button" onClick={(e) => setShowModal(true)}>
               <span>+</span>
               <br />
@@ -95,13 +89,13 @@ const Coupon = () => {
                 dataHandler={dataHandler}
               />
             )}
-          </Card>
+          </div>
         </Col>
         {data &&
           data.length > 0 &&
           data?.map((couponData, index) => (
             <Col key={index} className="coupon-items">
-              <Card
+              <div
                 key={index}
                 className={`subscription-card ${
                   activeCardIndex === index ? "active" : ""
@@ -113,11 +107,12 @@ const Coupon = () => {
                     color: "#707070",
                     fontSize: "32px",
                     margin: "20px",
-                    marginLeft: "30px",
-                    marginBottom: "0px",
+                    padding: "20px",
+                    paddingBottom: "0px",
                     fontWeight: "700",
                     fontFamily: "Poppins",
                   }}
+                  className="coupon-dis"
                 >
                   <b>{couponData?.discount ?? ""}</b>
                 </p>
@@ -128,6 +123,7 @@ const Coupon = () => {
                     fontSize: "16px",
                     marginLeft: "30px",
                   }}
+                  className="coupon-desc"
                 >
                   {couponData?.description ?? "-"}
                 </p>
@@ -136,7 +132,9 @@ const Coupon = () => {
                     color: "#707070",
                     fontSize: "25px",
                     marginLeft: "30px",
+                    paddingTop: "20px",
                   }}
+                  className="coupon-code"
                 >
                   <b>{couponData?.code ?? "-"}</b>
                 </p>
@@ -150,10 +148,10 @@ const Coupon = () => {
                   <br />
                   {couponData?.validity ?? 0}
                 </p>
-              </Card>
+              </div>
             </Col>
           ))}
-      </Row>
+      </di>
       {/* </div> */}
     </div>
   );

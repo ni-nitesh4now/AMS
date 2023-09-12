@@ -67,64 +67,58 @@
   position: absolute;
   top: 4.3vh;
 }
-
-
-.coupon-card-topp {
+.card-top {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  left: 19.6vw;
   position: absolute;
   top: 17.3vh;
-  display: flex;
-  flex-direction: row;
-  width: 76.6vw;
-  left: 20vw;
-  gap: 10px;
+  /* width: 51vw; */
 }
-
-.coupon-card-wrap-4 {
+.card-wrap-3 {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  left: 19.6vw;
+  position: absolute;
+  top: 39.3vh;
+  width: 51vw;
+}
+.card-wrap-4 {
   align-items: center;
   background-color: #ffffff;
   border-radius: 16px;
   display: inline-flex;
   flex: 0 0 auto;
+  gap: 10px;
   justify-content: center;
   overflow: hidden;
   padding: 16px 40px;
   position: relative;
   align-items: center;
+  gap: 10px;
   cursor: pointer;
+  margin-right: 20px;
   transition: background-color 0.3s, color 0.3s;
 }
 
-.coupon-card-wrap-4.active {
+.card-wrap-4.active {
   background-color: var(--blue);
-  color: white;
 }
 
-.coupon-input-container {
+.input-field-coupon {
+  background-color: white;
+  left: 70vw;
   position: absolute;
-  display: inline-block;
-  right: 0vw;
-}
+  top: 17.3vh;
 
-.input-field {
+  padding: 15px 40px;
+  width: 20vw;
+  border-radius: 16px;
   border: none;
   outline: none;
-  background: white;
-  padding: 10px 10px 10px 30px;
-  border-radius: 5px;
-  width: 22rem;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: "Poppins", sans-serif;
-  border-radius: 0.7rem;
-  text-align: justify;
-  color: rgba(169, 169, 177, 1);
-}
-
-.search-icon {
-  position: absolute;
-  left: 7px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgba(169, 169, 177, 1);
 }
 
 .coupon-card {
@@ -132,13 +126,14 @@
   position: absolute;
   left: 19.6vw;
   position: absolute;
-  top: 27.3vh;
+  top: 25.3vh;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  row-gap: 40px;
+  row-gap: 7px;
+  column-gap: 20px;
 }
 .create-coupon {
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   border-radius: 24px;
   display: flex;
   align-items: center;
@@ -220,19 +215,19 @@ body {
   /* width: 269px !important; */
   height: 32.4vh;
   width: 18vw;
-  /* position: absolute; */
+  position: relative;
   /* top: 27vh !important;
   left: 8vw !important; */
   border-radius: 24px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
-.subscription-coupon-card-create {
+.subscription-card-create {
   /* width: 269px !important; */
   height: 32.4vh;
   width: 18vw;
-  /* position: absolute; */
-  /* top: 27vh !important;
-  left: 8vw !important; */
+  position: absolute;
+  top: 20px;
+  /*left: 8vw !important; */
   border-radius: 24px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
@@ -243,8 +238,9 @@ body {
 }
 
 .button {
-  margin-top: 25px;
-  background-color: white;
+  margin-top: 29px;
+  margin-left: 29px;
+  /* background-color: white; */
   border: none;
   padding: 10px 20px;
   color: #333;
@@ -262,9 +258,10 @@ body {
   font-size: 14px;
   position: absolute;
   left: 30px;
-  bottom: 0;
+  bottom: 10px;
   /* margin: 20;   */
   padding: 0;
+  padding-bottom: 12px;
   margin-top: 80px;
 }
 
@@ -273,9 +270,10 @@ body {
   font-size: 14px;
   position: absolute;
   right: 1;
-  bottom: 1px;
+  bottom: 10px;
   /* margin: 20px; */
   padding: 0;
+  padding-bottom: 12px;
   left: 180px;
   margin-top: 80px;
 }
@@ -332,12 +330,21 @@ body {
   font-weight: 700;
   line-height: normal;
 }
+/* .modal-content input[type="text"] {
+  text-align: left !important;
+} */
+
 .modal-content input {
   border-radius: 8px;
   border: none;
+  width: 100%;
+  width: 366px;
+  height: 41px;
+  flex-shrink: 0;
   background-color: #eff3f4;
   border: 1px solid rgba(239, 243, 244, 1);
   outline: none;
+  text-align: left !important;
 }
 .modal-content h5 {
   color: var(--light-grey, #a9a9b1);
@@ -372,12 +379,19 @@ body {
 }
 .modal-type,
 .modal-code {
-  padding: 0.5rem 3rem;
-  text-align: left !important;
-  /* max-width: 500px; */
+  width: 366px;
+  height: 68px;
+  flex-shrink: 0;
 }
 .modal-desc {
-  padding: 2rem 3rem;
+  width: 366px;
+  height: 68px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: none;
+  background-color: #eff3f4;
+  border: 1px solid rgba(239, 243, 244, 1);
+  outline: none;
 }
 .modal-buttons {
   margin-top: 15px;
@@ -399,7 +413,6 @@ body {
 .modal-buttons button:last-child {
   margin-right: 0;
 }
-
 
 /* Filter.css */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,200&display=swap");

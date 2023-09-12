@@ -25,13 +25,14 @@ const Dashboard = () => {
   useEffect(() => {
     getAllCoupons()
       .then((response) => {
-        setTotalCoupons(response.data.totalCoupons);
+        // Assuming your API returns an array of coupons
+        const coupons = response.data;
+        setTotalCoupons(coupons.length); // Set the total number of coupons
       })
       .catch((error) => {
         console.error("Error fetching total coupons:", error);
       });
   }, []);
-  console.log(totalCoupons);
 
 // Fetch total users data from your Flask API when the component mounts
   const [totalUsers, setTotalUsers] = useState(0);

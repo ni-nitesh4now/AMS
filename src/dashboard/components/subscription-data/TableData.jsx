@@ -179,7 +179,7 @@ export default function MyTable() {
 
   return (
     <>
-    <h2 className="headd">Subuscription</h2>
+      <h2 className="headd">Subuscription</h2>
       <div className="filter-style">
         <button
           className={
