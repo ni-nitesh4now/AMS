@@ -170,7 +170,7 @@ const Dashboard = () => {
       </div>
       <div className="outer-6">
         <div className="text-wrapper-31">Total users</div>
-        <div className="text-wrapper-32">{activeData.activeUsers}</div>
+        <div className="text-wrapper-32">{totalUsers}</div>
         <div className="outer-7">
           <div className="text-wrapper-29">Total billing</div>
           <div className="text-wrapper-30">{activeData.totalBilling}</div>
