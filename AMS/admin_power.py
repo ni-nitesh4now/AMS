@@ -3,13 +3,23 @@ from flask_pymongo import PyMongo
 from bson import ObjectId
 from datetime import datetime
 from flask_cors import CORS  # Import the CORS module
+import flask_cors
 
 
 app = Flask(__name__)
-
+flask_cors.cross_origin(
+    origins='http://localhost:3000/',
+    methods=['GET', 'POST', 'HEAD', 'OPTIONS', 'PUT', 'DELETE'],
+    headers=None,
+    supports_credentials=False,
+    max_age=None,
+    send_wildcard=True,
+    always_send=True,
+    automatic_options=False
+)
 
 # Enable CORS for all routes
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app)
 app.config['MONGO_URI'] = 'mongodb://localhost:27017/newdatabase'
 mongo = PyMongo(app)
 
@@ -17,9 +27,21 @@ app.config["MONGO_URI"] = "mongodb://localhost:27017/newdatabse_management"
 mongo_m = PyMongo(app)
 
 # API endpoints supporting CRUD operations
-def get_entities(collection_name, dbinitialize):
-    all_entities = list(dbinitialize.db[collection_name].find())
+# def get_entities(collection_name, dbinitialize):
+#     all_entities = list(dbinitialize.db[collection_name].find())
+#     return jsonify(all_entities)
+#Wrong code above
+
+#correct code
+def get_entities(collection_name, mongo):
+    collection = mongo.db[collection_name]
+    all_entities = list(collection.find())
+    # Convert ObjectId to string for JSON serialization
+    for entity in all_entities:
+        entity['_id'] = str(entity['_id'])
+    
     return jsonify(all_entities)
+
 
 def get_entity(collection_name, entity_id, dbinitialize):
     entity = dbinitialize.db[collection_name].find_one({"_id": entity_id})
