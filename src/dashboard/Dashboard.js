@@ -13,6 +13,7 @@ import VectorImage from "./img/vector.svg";
 import FilterImage from "./img/icons8-filter-96-1.png";
 import ScreenTimeChart from "./screentime";
 import SideNav from "./SideNav";
+import Head from "./Head";
 
 const Dashboard = () => {
   const [allActive, setAllActive] = useState(true);
@@ -75,12 +76,7 @@ const Dashboard = () => {
   return (
     <div className="screen">
       <SideNav xyz={"Dashboard"} />
-      <div className="group-11">
-        <img className="profile" alt="Rectangle" src={RectangleImage} />
-        <div className="notification-wrapper">
-          <img className="notification" alt="Vector" src={VectorImage} />
-        </div>
-      </div>
+      <Head/>
       <div className="outer">
         <div className="text-wrapper-3">Verification request</div>{" "}
         <div className="text-wrapper-5">{activeData.requests}*</div>
@@ -106,8 +102,8 @@ const Dashboard = () => {
         <div className="text-wrapper-6">{totalCoupons}</div>
       </div>
       <div className="text-wrapper-7">Dashboard</div>
-      <div className="card">
-        <div className="card-wrap-2">
+      <div className="dashboard">
+        <div className="dashboard-wrap-2">
           <div className="rectangle">
             <div className="group">
               <div className="text-wrapper-8">Total users</div>
@@ -115,7 +111,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="card-wrap-2">
+        <div className="dashboard-wrap-2">
           <div className="rectangle-2">
             <div className="group">
               <div className="text-wrapper-8">Active user</div>
@@ -123,7 +119,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="card-wrap-2">
+        <div className="dashboard-wrap-2">
           <div className="rectangle-3">
             <div className="group">
               <div className="text-wrapper-8">Total billing</div>
@@ -132,33 +128,33 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="card-wrap-3">
+      <div className="dashboard-wrap-3">
         <div
-          className={`card-wrap-4 ${allActive ? "active" : ""}`}
+          className={`dashboard-wrap-4 ${allActive ? "active" : ""}`}
           onClick={() => toggleButton("All")}
         >
           <div className="text-wrapper-13">All</div>
         </div>
         <div
-          className={`card-wrap-4 ${studentActive ? "active" : ""}`}
+          className={`dashboard-wrap-4 ${studentActive ? "active" : ""}`}
           onClick={() => toggleButton("Student")}
         >
           <div className="text-wrapper-13">Student</div>
         </div>
         <div
-          className={`card-wrap-4 ${teacherActive ? "active" : ""}`}
+          className={`dashboard-wrap-4 ${teacherActive ? "active" : ""}`}
           onClick={() => toggleButton("Teacher")}
         >
           <div className="text-wrapper-13">Teacher</div>
         </div>
         <div
-          className={`card-wrap-4 ${parentActive ? "active" : ""}`}
+          className={`dashboard-wrap-4 ${parentActive ? "active" : ""}`}
           onClick={() => toggleButton("Parent")}
         >
           <div className="text-wrapper-13">Parent</div>
         </div>
         <div
-          className={`card-wrap-4 ${managementActive ? "active" : ""}`}
+          className={`dashboard-wrap-4 ${managementActive ? "active" : ""}`}
           onClick={() => toggleButton("Management")}
         >
           <div className="text-wrapper-13">Management</div>

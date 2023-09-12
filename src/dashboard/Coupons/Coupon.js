@@ -6,6 +6,7 @@ import VectorImage from "./img/vector.svg";
 import { Card, Col, Row } from "react-bootstrap";
 import CouponModal from "./CouponModal";
 import SideNav from "../SideNav";
+import Head from "../Head";
 
 const Coupon = () => {
   const [allActive, setAllActive] = useState(true);
@@ -29,7 +30,7 @@ const Coupon = () => {
 
   const handleCardClick = (index) => {
     if (index === activeCardIndex) {
-      setActiveCardIndex(null); // Deselect the card if clicked again
+      setActiveCardIndex(null); 
     } else {
       setActiveCardIndex(index);
     }
@@ -38,12 +39,7 @@ const Coupon = () => {
   return (
     <div className="coupon-screen">
       <SideNav xyz={"coupon"} />
-      <div className="group-11">
-        <img className="profile" alt="Rectangle" src={RectangleImage} />
-        <div className="notification-wrapper">
-          <img className="notification" alt="Vector" src={VectorImage} />
-        </div>
-      </div>
+      <Head/>
       <div className="text-wrapper-7">Coupon</div>
       <div className="card-top">
         <div

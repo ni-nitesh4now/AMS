@@ -52,28 +52,28 @@ const SideNav = ({ xyz }) => {
           path: "/management",
           name: "Management",
           icon: <FaUserTie />,
-          active: xyz === ""? true : false,
+          active: xyz === "management"? true : false,
 
         },
         {
           path: "/student",
           name: "Student",
           icon: <HiUserGroup />,
-          active: xyz === ""? true : false,
+          active: xyz === "student"? true : false,
 
         },
         {
           path: "/parent",
           name: "Parent",
           icon: <HiUsers />,
-          active: xyz === ""? true : false,
+          active: xyz === "parent"? true : false,
 
         },
         {
           path: "/teacher",
           name: "Teacher",
           icon: <FaUserEdit />,
-          active: xyz === ""? true : false,
+          active: xyz === "teacher"? true : false,
 
         },
       ],
@@ -82,7 +82,7 @@ const SideNav = ({ xyz }) => {
       path: "/subscription",
       name: "Subscription",
       icon: <FaFileInvoiceDollar />,
-      active:xyz===""?true: false, 
+      active:xyz==="subscription"?true: false, 
     },
     {
       path: "/coupon",

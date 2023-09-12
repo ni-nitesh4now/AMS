@@ -7,6 +7,8 @@ import { Card, Col, Row } from "react-bootstrap";
 import SubscriptionModal from "./SubscriptionModal";
 import { BsThreeDotsVertical } from "react-icons/bs"; 
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import Head from "./Head";
+import SideNav from "./SideNav";
 const Subscription = () => {
   const [allActive, setAllActive] = useState(true);
   const [Active, setActive] = useState(false);
@@ -37,12 +39,8 @@ const Subscription = () => {
 
   return (
     <div className="coupon1-screen1">
-      <div className="group1-111">
-        <img className="profile11" alt="Rectangle" src={RectangleImage} />
-        <div className="notification1-wrapper1">
-          <img className="notification11" alt="Vector" src={VectorImage} />
-        </div>
-      </div>
+    <SideNav xyz={"subscription"} />
+    <Head/>
       <div className="text1-wrapper1-7">Subscription</div>
       <div className="card1-top1">
         <div

@@ -6,18 +6,14 @@ import Piechart from "./Billingpiechart";
 import Barchart from "./Billingbarchart";
 import BScreenTimeChart from "./BillingScreenTime";
 import SideNav from "./SideNav";
+import Head from "./Head";
 
 const Billing = () => {
 
   return (
     <div className="billing_screen" >
       <SideNav xyz={"billing"}/>
-      <div className="billing_group-11">
-        <img className="billing_profile" alt="Rectangle" src={Profile} />
-        <div className="billing_notification-wrapper">
-          <img className="billing_notification" alt="Vector" src={VectorImage} />
-        </div>
-      </div>
+      <Head/>
 
       <div className="billing_text-wrapper-7">Billing</div>
       <div className="billing_outer"> 
