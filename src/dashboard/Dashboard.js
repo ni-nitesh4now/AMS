@@ -7,6 +7,7 @@ import {
   parentData,
   managementData,
 } from "./data.js";
+import { getAllCoupons, getTotalUsers } from "../API/apis";
 import RectangleImage from "./img/rectangle-54.png";
 import VectorImage from "./img/vector.svg";
 import FilterImage from "./img/icons8-filter-96-1.png";
@@ -19,36 +20,34 @@ const Dashboard = () => {
   const [teacherActive, setTeacherActive] = useState(false);
   const [parentActive, setParentActive] = useState(false);
   const [managementActive, setManagementActive] = useState(false);
-  const [apiData, setApiData] = useState({}); // State to store API data
+  const [totalCoupons, setTotalCoupons] = useState(0);
 
-  // Fetch data from Flask API based on the active category
   useEffect(() => {
-    const fetchData = async () => {
-      const category = allActive
-        ? "All"
-        : studentActive
-        ? "Student"
-        : teacherActive
-        ? "Teacher"
-        : parentActive
-        ? "Parent"
-        : managementActive
-        ? "Management"
-        : "All";
-      try {
-        const response = await fetch(`/subscriptions?category=${category}`); // Replace with your API endpoint URL
-        if (!response.ok) {
-          throw new Error(`HTTP Error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setApiData(data); // Update the state with the received data
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+    getAllCoupons()
+      .then((response) => {
+        setTotalCoupons(response.data.totalCoupons);
+      })
+      .catch((error) => {
+        console.error("Error fetching total coupons:", error);
+      });
+  }, []);
+  console.log(totalCoupons);
 
-    fetchData(); // Call the function to fetch data when the component mounts and when the active category changes
-  }, [allActive, studentActive, teacherActive, parentActive, managementActive]);
+// Fetch total users data from your Flask API when the component mounts
+  const [totalUsers, setTotalUsers] = useState(0);
+
+  useEffect(() => {
+    getTotalUsers()
+      .then((data) => {
+        // Assuming your API response contains a field named 'totalUsers'
+        setTotalUsers(data.totalUsers);
+      })
+      .catch((error) => {
+        console.error('Error fetching total users:', error);
+      });
+  }, []);
+  console.log(totalUsers);
+
 
   const toggleButton = (button) => {
     setAllActive(button === "All");
@@ -103,7 +102,7 @@ const Dashboard = () => {
       </div>
       <div className="outer-3">
         <div className="text-wrapper-3">Total Coupons</div>
-        <div className="text-wrapper-6">{activeData.totalCoupons}</div>
+        <div className="text-wrapper-6">{totalCoupons}</div>
       </div>
       <div className="text-wrapper-7">Dashboard</div>
       <div className="card">
@@ -111,7 +110,7 @@ const Dashboard = () => {
           <div className="rectangle">
             <div className="group">
               <div className="text-wrapper-8">Total users</div>
-              <div className="text-wrapper-9">{activeData.totalUsers}</div>
+              <div className="text-wrapper-9">{totalUsers}</div>
             </div>
           </div>
         </div>

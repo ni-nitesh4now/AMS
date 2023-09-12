@@ -5,8 +5,11 @@ from datetime import datetime
 
 
 app = Flask(__name__)
+from flask_cors import CORS  # Import the CORS module
 
-app.config['MONGO_URI'] = 'mongodb://localhost:27017/newdatabse'
+# Enable CORS for all routes
+CORS(app)
+app.config['MONGO_URI'] = 'mongodb://localhost:27017/newdatabase'
 mongo = PyMongo(app)
 
 app.config["MONGO_URI"] = "mongodb://localhost:27017/newdatabse_management"
