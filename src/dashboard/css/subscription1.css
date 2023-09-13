@@ -274,11 +274,9 @@ body {
   font-family: "Poppins";
 }
 .sub_bottom {
- 
   display: flex;
   justify-content: space-between;
   width: 100%;
-  
 }
 
 .right1-entry1 {
