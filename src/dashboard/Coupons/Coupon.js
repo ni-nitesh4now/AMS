@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import { Card, Col, Row } from "react-bootstrap";
-import CouponModal from "./CouponModal";
 import SideNav from "../SideNav";
 import Head from "../Head";
 import { getAllCoupons, createCoupon } from "../../API/apis";
 
 const Coupon = () => {
   const [allActive, setAllActive] = useState(true);
-  const [Active, setActive] = useState(false);
-  const [Expired, setExpired] = useState(false);
+  const [active, setActive] = useState(false);
+  const [expired, setExpired] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [coupons, setCoupons] = useState([]);
-  const [data, setData] = useState([]);
   const [activeCardIndex, setActiveCardIndex] = useState(null);
-  console.log(data);
+
+  const [discount, setDiscount] = useState("");
+  const [validity, setValidity] = useState("");
+  const [type, setType] = useState("");
+  const [code, setCode] = useState("");
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     getAllCoupons()
@@ -26,15 +29,20 @@ const Coupon = () => {
       });
   }, []);
 
-  const dataHandler = (submitData) => {
-    createCoupon(submitData)
-      .then((response) => {
-        setCoupons([...coupons, response.data]);
-        setShowModal(false); // Close the modal after creating a coupon
-      })
-      .catch((error) => {
-        console.error("Error creating coupon:", error);
-      });
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const dataHandler = async (submitData) => {
+    console.log("Data being sent to server:", submitData); // Add this line for debugging
+    handleClose();
+    handleClose();
+    try {
+      const response = await createCoupon(submitData);
+      setCoupons((prev) => [response, ...prev]);
+      console.log("Coupon created successfully.");
+    } catch (error) {
+      console.error("Error creating coupon:", error);
+    }
   };
 
   const toggleButton = (button) => {
@@ -45,12 +53,36 @@ const Coupon = () => {
 
   const handleCardClick = (index) => {
     if (index === activeCardIndex) {
-      setActiveCardIndex(null); 
+      setActiveCardIndex(null);
     } else {
       setActiveCardIndex(index);
     }
   };
-  console.log("data length:", data);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const obj = {
+      discount,
+      validity,
+      type,
+      code,
+      description,
+    };
+    dataHandler(obj);
+    setDiscount("");
+    setValidity("");
+    setType("");
+    setCode("");
+    setDescription("");
+    setShowModal(false);
+  };
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "scroll";
+    };
+  }, []);
 
   return (
     <div className="coupon-screen">
@@ -65,13 +97,13 @@ const Coupon = () => {
           <div className="text-wrapper-13">All</div>
         </div>
         <div
-          className={`card-wrap-4 ${Active ? "active" : ""}`}
+          className={`card-wrap-4 ${active ? "active" : ""}`}
           onClick={() => toggleButton("Active")}
         >
           <div className="text-wrapper-13">Active</div>
         </div>
         <div
-          className={`card-wrap-4 ${Expired ? "active" : ""}`}
+          className={`card-wrap-4 ${expired ? "active" : ""}`}
           onClick={() => toggleButton("Expired")}
         >
           <div className="text-wrapper-13">Expired</div>
@@ -94,19 +126,93 @@ const Coupon = () => {
             </button>
 
             {showModal && (
-              <CouponModal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                dataHandler={dataHandler}
-              />
+              <div className="modal-wrapper">
+                <div className="modal-content">
+                  <h3 className="text-wrapper-modal">Create Coupon</h3>
+                  <div className="content-wrapper-1">
+                    <div className="modal-discount-div">
+                      <h5 className="modal-discount-name">Discount</h5>
+                      <input
+                        type="text"
+                        className="modal-discount"
+                        placeholder="example"
+                        onChange={(e) => {
+                          setDiscount(e.target.value);
+                        }}
+                      />
+                    </div>
+
+                    <div className="modal-validity-div">
+                      <h5 className="modal-validity-name">Validity</h5>
+                      <input
+                        type="date"
+                        className="modal-validity"
+                        onChange={(e) => {
+                          setValidity(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="content-wrapper-2">
+                    <h5 className="modal-type-name">Type</h5>
+                    <input
+                      type="text"
+                      className="modal-type"
+                      list="cityname"
+                      placeholder="example"
+                      onChange={(e) => {
+                        setType(e.target.value);
+                      }}
+                    />
+                    <datalist id="cityname">
+                      <option value="New Delhi"></option>
+                      <option value="Mumbai"></option>
+                    </datalist>
+                  </div>
+                  <div className="content-wrapper-3">
+                    <h5 className="modal-code-name">Create Code</h5>
+                    <input
+                      type="text"
+                      className="modal-code"
+                      onChange={(e) => {
+                        setCode(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className="content-wrapper-4">
+                    <h5 className="modal-desc-name">Description</h5>
+                    <input
+                      type="text"
+                      className="modal-desc"
+                      onChange={(e) => {
+                        setDescription(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className="modal-buttons">
+                    <button className="modal-create" onClick={submitHandler}>
+                      Create
+                    </button>
+                    <button
+                      className="modal-cancel"
+                      onClick={() => {
+                        setShowModal(false);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </Col>
+
         {coupons &&
           coupons.length > 0 &&
           coupons.map((couponData, index) => (
             <Col key={index} className="coupon-items">
-              <div
+              <Card
                 key={index}
                 className={`subscription-card ${
                   activeCardIndex === index ? "active" : ""
@@ -118,12 +224,11 @@ const Coupon = () => {
                     color: "#707070",
                     fontSize: "32px",
                     margin: "20px",
-                    padding: "20px",
-                    paddingBottom: "0px",
+                    marginLeft: "30px",
+                    marginBottom: "0px",
                     fontWeight: "700",
                     fontFamily: "Poppins",
                   }}
-                  className="coupon-dis"
                 >
                   <b>{couponData?.discount ?? ""}</b>
                 </p>
@@ -134,7 +239,6 @@ const Coupon = () => {
                     fontSize: "16px",
                     marginLeft: "30px",
                   }}
-                  className="coupon-desc"
                 >
                   {couponData?.description ?? "-"}
                 </p>
@@ -143,23 +247,22 @@ const Coupon = () => {
                     color: "#707070",
                     fontSize: "25px",
                     marginLeft: "30px",
-                    paddingTop: "20px",
                   }}
-                  className="coupon-code"
                 >
-                  <b>{couponData?.code ?? "-"}</b>
+                  <b>{couponData?.coupon_code ?? "-"}</b>{" "}
+                  {/* Use the correct property name */}
                 </p>
                 <p className="left-entry">
                   <small>Count</small>
                   <br />
-                  {couponData?.type ?? 0}
+                  {couponData?.limit ?? 0} {/* Use the correct property name */}
                 </p>
                 <p className="right-entry">
                   <small>Validity</small>
                   <br />
                   {couponData?.validity ?? 0}
                 </p>
-              </div>
+              </Card>
             </Col>
           ))}
       </div>

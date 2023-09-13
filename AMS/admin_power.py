@@ -118,13 +118,13 @@ def get_subscription(subscription_id):
 # create a new subscription
 @app.route('/create_subscription', methods=['POST'])
 def create_subscription():
-    name = request.form.get('name')
-    amount = int(request.form.get('amount'))
-    period = request.form.get('period')
-    description = request.form.get('description')
-    feature_offering = request.form.get('feature_offering')
-    tax_regime = int(request.form.get('tax_regime'))
-    tax_excluded = request.form.get('tax_excluded')
+    name = request.json['name']
+    amount = int(request.json['amount'])
+    period = request.json['period']
+    description = request.json['description']
+    feature_offering = request.json['feature_offering']
+    tax_regime = int(request.json['tax_regime'])
+    tax_excluded = request.json['tax_excluded']
     total = calculate_total(amount,tax_regime, tax_excluded)
 
     new_subscription ={
@@ -148,13 +148,13 @@ def create_subscription():
 # update subscription requires existing subscription id
 @app.route('/update_subscription/<string:subscription_id>', methods=['PUT'])
 def update_subscription(subscription_id):
-    name = request.form.get('name')
-    amount = int(request.form.get('amount'))
-    period = request.form.get('period')
-    description = request.form.get('description')
-    feature_offering = request.form.get('feature_offering')
-    tax_regime = int(request.form.get('tax_regime'))
-    tax_excluded = request.form.get('tax_excluded')
+    name = request.json['name']
+    amount = int(request.json['amount'])
+    period = request.json['period']
+    description = request.json['description']
+    feature_offering = request.json['feature_offering']
+    tax_regime = int(request.json['tax_regime'])
+    tax_excluded = request.json['tax_excluded']
     total = calculate_total(amount,tax_regime, tax_excluded)
 
     update_subscription ={
@@ -215,7 +215,7 @@ def get_all_managements():
 
 @app.route('/edit_user/<string:_id>')
 def edit_user_details(_id):
-    update_user_id = request.form.get('user_id')
+    update_user_id = request.json['user_id']
     if mongo_s.db.student_profile.find_one({"_id": _id}) is not None:
         # entity = mongo.db.student_profile.find_one({"_id": _id})
         collection_name = 'student_profile'
@@ -272,43 +272,56 @@ def block_single_user(email):
 def get_all_coupon():
     return get_entities('coupons_collection', mongo_a)
 
-#Create new coupon
+
 @app.route('/generate_coupon', methods=['POST'])
 def generate_coupon():
     try:
-        coupon_code = request.form.get('coupon_code')
-        coupon_type = request.form.get('coupon_type')
-        discount = int(request.form.get('discount'))
-        start_date = request.form.get('start_date')
-        expire_date = request.form.get('expire_date')
-        description = request.form.get('description')
+        coupon_code = request.json['code']
+        coupon_type = request.json['type']
+        discount = request.json['discount']
+        limit=5
+        limit_type="xyz"
+        expire_date = request.json['validity']
+        description = request.json['description']
+
+        # Basic input validation
+        if not coupon_code or not coupon_type or not discount  or not expire_date or not description:
+            return jsonify({'error': 'All fields are required.'}), 400
+        # Validate and convert 'discount' to an integer
+        try:
+            discount = int(discount)
+        except ValueError:
+            return jsonify({'error': 'Invalid discount value. Please enter a valid number.'}), 400
+        # You can add more validation as needed for dates, etc.
         entity_data = {
-            '_id': coupon_code, 
+            "_id": str(ObjectId()),
+            'coupon_code': coupon_code, 
             'discount': discount, 
-            'coupon_type': coupon_type,
+            'discount_type': coupon_type,
+            'validity': expire_date, 
+            'limit':limit,
+            'limit_type':limit_type,
             'description': description,
-            'start_date':start_date, 
-            'expire_date': expire_date, 
             'used': False,
             'created_at': datetime.now(),
-            'updated_at': "Not updated"
-            }
+            # 'updated_at': "Not updated"
+        }
         inserted_id = mongo_a.db.coupons_collection.insert_one(entity_data).inserted_id
         inserted = mongo_a.db.coupons_collection.find_one({"_id": inserted_id})
         return jsonify({"_id": str(inserted["_id"])}), 200
-    except ValueError as e:
-        return "Invalid discount value. Please enter a valid number.", 404
+    except Exception as e:
+        return jsonify({'error': 'An error occurred while processing your request.'}), 500
 
 
 # update existing coupon 
 @app.route('/update_coupon/<string:coupon_id>', methods = ['PUT'])
 def update_coupon(coupon_id):
-    coupon_code = request.form.get('coupon_code')
-    coupon_type = request.form.get('coupon_type')
-    discount = int(request.form.get('discount'))
-    start_date = request.form.get('start_date')
-    expire_date = request.form.get('expire_date')
-    description = request.form.get('description')
+    coupon_code = request.json['coupon_code']
+    coupon_type = request.json['coupon_type']
+    discount = int(request.json['discount'])
+    start_date = request.json['start_date']
+    expire_date = request.json['expire_date']
+    description = request.json['description']
     entity_data = {
         '_id':coupon_code,
         'coupon_type':coupon_type,
