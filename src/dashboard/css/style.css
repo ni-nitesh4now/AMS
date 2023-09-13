@@ -112,11 +112,10 @@
   font-family: "Poppins", Helvetica;
   font-size: 16px;
   font-weight: 700;
-  left: 1.66vw;
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
-  top: 3.2vh;
+  text-align: left; /* Align text to the left */
+  margin-top: 10px; /* Adjust this value as needed for spacing */
 }
 
 .bartext-wrapper-4 {
@@ -153,7 +152,6 @@
   position: absolute;
   top: 8.8vh;
 }
-
 .outer-3 {
   background-color: #ffffff;
   border-radius: 24px;
@@ -162,20 +160,21 @@
   position: absolute;
   top: 63vh;
   width: 21.5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertical centering */
+  align-items: center; /* Horizontal centering */
 }
 
-.text-wrapper-6 {
+.dash-text-wrapper-6 {
   color: #444444;
   font-family: "Poppins", Helvetica;
   font-size: 31px;
   font-weight: 700;
-  left: 8vw;
   letter-spacing: 0;
   line-height: normal;
-  position: absolute;
-  top: 12.4vh;
+  text-align: center; /* Center-align the text */
 }
-
 .text-wrapper-7 {
   color: var(--dark-grey-2);
   font-family: "Poppins", Helvetica;

@@ -23,6 +23,44 @@ export const getAllPlatformUsers = () => {
     });
 };
 
+// Fetch all users on the platform
+export const getAllStudents = () => {
+  return axios.get(`${apiUrl}/get_all_students`)
+    .then((response) => {
+      return response.data; // Return the response data
+    })
+    .catch((error) => {
+      throw error; // Handle errors
+    });
+};// Fetch all users on the platform
+export const getAllTeachers = () => {
+  return axios.get(`${apiUrl}/get_all_teachers`)
+    .then((response) => {
+      return response.data; // Return the response data
+    })
+    .catch((error) => {
+      throw error; // Handle errors
+    });
+};// Fetch all users on the platform
+export const getAllParents = () => {
+  return axios.get(`${apiUrl}/get_all_parents`)
+    .then((response) => {
+      return response.data; // Return the response data
+    })
+    .catch((error) => {
+      throw error; // Handle errors
+    });
+};
+// Fetch all users on the platform
+export const getAllmanagement = () => {
+  return axios.get(`${apiUrl}/get_all_managements`)
+    .then((response) => {
+      return response.data; // Return the response data
+    })
+    .catch((error) => {
+      throw error; // Handle errors
+    });
+};
 // Edit user details by user ID
 export const editUserDetails = (userId, userFormData) => {
   return axios.put(`${apiUrl}/edit_user/${userId}`, userFormData)

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import "./css/style.css";
 import {
@@ -7,9 +8,7 @@ import {
   parentData,
   managementData,
 } from "./data.js";
-import { getAllCoupons, getTotalUsers } from "../API/apis";
-import RectangleImage from "./img/rectangle-54.png";
-import VectorImage from "./img/vector.svg";
+import { getAllCoupons, getAllPlatformUsers, getAllStudents, getAllTeachers, getAllParents, getAllmanagement } from "../API/apis";
 import FilterImage from "./img/icons8-filter-96-1.png";
 import ScreenTimeChart from "./screentime";
 import SideNav from "./SideNav";
@@ -21,62 +20,80 @@ const Dashboard = () => {
   const [teacherActive, setTeacherActive] = useState(false);
   const [parentActive, setParentActive] = useState(false);
   const [managementActive, setManagementActive] = useState(false);
+  const [activeButton, setActiveButton] = useState("All");
   const [totalCoupons, setTotalCoupons] = useState(0);
+  const [allUsersCount, setAllUsersCount] = useState(0);
+  const [activeData, setActiveData] = useState(totalData);
+  const [activeButtonToApiFunctionMap] = useState({
+    All: getAllPlatformUsers,
+    Student: getAllStudents,
+    Teacher: getAllTeachers,
+    Parent: getAllParents,
+    Management: getAllmanagement,
+  });
 
   useEffect(() => {
     getAllCoupons()
       .then((response) => {
-        // Assuming your API returns an array of coupons
         const coupons = response.data;
-        setTotalCoupons(coupons.length); // Set the total number of coupons
+        setTotalCoupons(coupons.length);
       })
       .catch((error) => {
         console.error("Error fetching total coupons:", error);
       });
   }, []);
 
-// Fetch total users data from your Flask API when the component mounts
-  const [totalUsers, setTotalUsers] = useState(0);
-
   useEffect(() => {
-    getTotalUsers()
-      .then((data) => {
-        // Assuming your API response contains a field named 'totalUsers'
-        setTotalUsers(data.totalUsers);
-      })
-      .catch((error) => {
-        console.error('Error fetching total users:', error);
-      });
-  }, []);
-  console.log(totalUsers);
-
+    if (activeButtonToApiFunctionMap[activeButton]) {
+      activeButtonToApiFunctionMap[activeButton]()
+        .then((response) => {
+          const users = response;
+          console.log(`${activeButton} users:`, users);
+          setAllUsersCount(users.length);
+        })
+        .catch((error) => {
+          console.error(`Error fetching total ${activeButton.toLowerCase()}s:`, error);
+        });
+    }
+  }, [activeButton, activeButtonToApiFunctionMap]);
 
   const toggleButton = (button) => {
+    setActiveButton(button);
     setAllActive(button === "All");
     setStudentActive(button === "Student");
     setTeacherActive(button === "Teacher");
     setParentActive(button === "Parent");
     setManagementActive(button === "Management");
   };
-  const getData = () => {
-    if (allActive) {
-      return totalData;
-    } else if (studentActive) {
-      return studentData;
-    } else if (teacherActive) {
-      return teacherData;
-    } else if (parentActive) {
-      return parentData;
-    } else if (managementActive) {
-      return managementData;
-    }
-  };
-  const activeData = getData();
+
+
+  useEffect(() => {
+    const getData = () => {
+      switch (activeButton) {
+        case "All":
+          return totalData;
+        case "Student":
+          return studentData;
+        case "Teacher":
+          return teacherData;
+        case "Parent":
+          return parentData;
+        case "Management":
+          return managementData;
+        default:
+          return totalData;
+      }
+    };
+
+    setActiveData(getData());
+  }, [activeButton]);
+
+  console.log("allUsersCount:", allUsersCount);
 
   return (
     <div className="screen">
       <SideNav xyz={"Dashboard"} />
-      <Head/>
+      <Head />
       <div className="outer">
         <div className="text-wrapper-3">Verification request</div>{" "}
         <div className="text-wrapper-5">{activeData.requests}*</div>
@@ -99,7 +116,7 @@ const Dashboard = () => {
       </div>
       <div className="outer-3">
         <div className="text-wrapper-3">Total Coupons</div>
-        <div className="text-wrapper-6">{totalCoupons}</div>
+        <div className="dash-text-wrapper-6">{totalCoupons}</div>
       </div>
       <div className="text-wrapper-7">Dashboard</div>
       <div className="dashboard">
@@ -107,7 +124,7 @@ const Dashboard = () => {
           <div className="rectangle">
             <div className="group">
               <div className="text-wrapper-8">Total users</div>
-              <div className="text-wrapper-9">{totalUsers}</div>
+              <div className="text-wrapper-9">{allUsersCount}</div>
             </div>
           </div>
         </div>
@@ -170,7 +187,7 @@ const Dashboard = () => {
       </div>
       <div className="outer-6">
         <div className="text-wrapper-31">Total users</div>
-        <div className="text-wrapper-32">{totalUsers}</div>
+        <div className="text-wrapper-32">{allUsersCount}</div>
         <div className="outer-7">
           <div className="text-wrapper-29">Total billing</div>
           <div className="text-wrapper-30">{activeData.totalBilling}</div>
