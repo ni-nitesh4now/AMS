@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./css/subscription1.css";
-import RectangleImage from "./img/rectangle-54.png";
-import VectorImage from "./img/vector.svg";
-import FilterImage from "./img/icons8-filter-96-1.png";
 import { Card, Col, Row } from "react-bootstrap";
 import SubscriptionModal from "./SubscriptionModal";
-import { BsThreeDotsVertical } from "react-icons/bs"; 
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import Head from "./Head";
 import SideNav from "./SideNav";
@@ -39,8 +36,8 @@ const Subscription = () => {
 
   return (
     <div className="coupon1-screen1">
-    <SideNav xyz={"subscription"} />
-    <Head/>
+      <SideNav xyz={"subscription"} />
+      <Head />
       <div className="text1-wrapper1-7">Subscription</div>
       <div className="card1-top1">
         <div
@@ -98,9 +95,9 @@ const Subscription = () => {
                 <p
                   style={{
                     color: "#707070",
-                    fontSize: "18px",
-                    marginLeft: "200px",
-                    marginTop: "10px"
+                    fontSize: "20px",
+                    marginLeft: "208px",
+                    paddingTop: "20px"
 
                   }}
                 >
@@ -115,14 +112,13 @@ const Subscription = () => {
                   style={{
                     color: "#707070",
                     fontSize: "18px",
-                    marginTop: "-10px",
                     marginLeft: "14px",
                     fontWeight: "700",
                     fontFamily: "Poppins",
                     fontWeight: 700
                   }}
                 >
-                  <b>{couponData?.name ?? ""}</b>
+                  <b>{couponData?.name ?? "-"}</b>
                 </p>
 
                 <p
@@ -130,10 +126,11 @@ const Subscription = () => {
                     color: "black",
                     fontSize: "32px",
                     marginLeft: "14px",
-                    fontWeight: 700
+                    fontWeight: 700,
+                    marginTop: "13px"
                   }}
                 >
-                  <b>&#8377;{couponData?.amount ?? ""}</b><p style={{
+                  <b>&#8377;{couponData?.amount ?? "-"}</b><p style={{
                     color: "black",
                     fontSize: "15px",
                     fontWeight: 700,
@@ -157,7 +154,9 @@ const Subscription = () => {
                     color: "#A9A9B1",
                     fontSize: "12px",
                     marginLeft: "14px",
-                    marginRight: "12px"
+                    marginRight: "12px",
+                    marginTop: "10px",
+                    wordSpacing: "5px"
                   }}
                 >
                   <b>{couponData?.description ?? "-"}</b>
@@ -166,34 +165,37 @@ const Subscription = () => {
                   style={{
                     color: "#707070",
                     fontSize: "15px",
-                    marginLeft: "14px",
+                    marginLeft: "15px",
+                    marginTop:"20px"
                   }}
                 >
 
-<ul style={{ padding:"0px"}}>
-        {couponData?.nonEmptyLines.map((item, index1) => (
-          <li className="li" key={index1}><span style={{marginRight:"10px"}}><IoIosCheckmarkCircleOutline/></span>{item}</li>
-        ))}
-      </ul>
+                  <ul style={{ padding: "0px" }}>
+                    {couponData?.nonEmptyLines.map((item, index1) => (
+                      <li className="li" key={index1}><span style={{ marginRight: "10px" }}><IoIosCheckmarkCircleOutline /></span>{item}</li>
+                    ))}
+                  </ul>
 
-                  
+
                 </p>
-
+                
+                <div className="sub_bottom">
                 <p className="left1-entry1">
-                  <small>Tax regime</small> 
+                  <small>Tax regime</small>
                   <br />
-                  {couponData?.tax ?? 0}%  {couponData?.selectedOption ?? '-'} 
+                  {couponData?.tax ?? "0"}%  {couponData?.selectedOption ?? '-'}
                 </p>
                 <p className="right1-entry1">
                   <small>Total amount</small>
                   <br />
-                 <span style={{fontSize:"16px"}}>&#8377;{couponData?.TotalAmount ?? 0}</span> 
+                  <span style={{ fontSize: "16px" }}>&#8377;{couponData?.TotalAmount ?? "0"}</span>
                 </p>
+                  </div>
+                
               </Card>
             </Col>
           ))}
       </Row>
-      {/* </div> */}
     </div>
   );
 };

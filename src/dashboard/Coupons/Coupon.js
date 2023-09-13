@@ -1,25 +1,40 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
-import RectangleImage from "./img/rectangle-54.png";
-import VectorImage from "./img/vector.svg";
-// import FilterImage from "./img/icons8-filter-96-1.png";
 import { Card, Col, Row } from "react-bootstrap";
 import CouponModal from "./CouponModal";
 import SideNav from "../SideNav";
 import Head from "../Head";
+import { getAllCoupons, createCoupon } from "../../API/apis";
 
 const Coupon = () => {
   const [allActive, setAllActive] = useState(true);
   const [Active, setActive] = useState(false);
   const [Expired, setExpired] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [coupons, setCoupons] = useState([]);
   const [data, setData] = useState([]);
   const [activeCardIndex, setActiveCardIndex] = useState(null);
   console.log(data);
-  const dataHandler = (submitData) => {
-    const updatedArray = [...data, submitData];
 
-    setData(updatedArray);
+  useEffect(() => {
+    getAllCoupons()
+      .then((response) => {
+        setCoupons(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching coupons:", error);
+      });
+  }, []);
+
+  const dataHandler = (submitData) => {
+    createCoupon(submitData)
+      .then((response) => {
+        setCoupons([...coupons, response.data]);
+        setShowModal(false); // Close the modal after creating a coupon
+      })
+      .catch((error) => {
+        console.error("Error creating coupon:", error);
+      });
   };
 
   const toggleButton = (button) => {
@@ -36,10 +51,11 @@ const Coupon = () => {
     }
   };
   console.log("data length:", data);
+
   return (
     <div className="coupon-screen">
       <SideNav xyz={"coupon"} />
-      <Head/>
+      <Head />
       <div className="text-wrapper-7">Coupon</div>
       <div className="card-top">
         <div
@@ -68,8 +84,7 @@ const Coupon = () => {
           placeholder="Search user"
         />
       </div>
-      {/* <div> */}
-      <di className="coupon-card">
+      <div className="coupon-card">
         <Col md={3}>
           <div className="subscription-card-create">
             <button className="button" onClick={(e) => setShowModal(true)}>
@@ -87,9 +102,9 @@ const Coupon = () => {
             )}
           </div>
         </Col>
-        {data &&
-          data.length > 0 &&
-          data?.map((couponData, index) => (
+        {coupons &&
+          coupons.length > 0 &&
+          coupons.map((couponData, index) => (
             <Col key={index} className="coupon-items">
               <div
                 key={index}
@@ -147,9 +162,9 @@ const Coupon = () => {
               </div>
             </Col>
           ))}
-      </di>
-      {/* </div> */}
+      </div>
     </div>
   );
 };
+
 export default Coupon;

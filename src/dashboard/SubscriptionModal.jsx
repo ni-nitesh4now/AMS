@@ -4,19 +4,6 @@ import Select from "react-select";
 
 const SubscriptionModal = (props) => {
   const { showModal, setShowModal, dataHandler } = props;
-  const typeoptions = [
-    {
-      value: "one-time",
-      label: "One Time Apply",
-    },
-    { value: "assign-limit", label: "Assign Limits" },
-    { value: "first-limited-user", label: "First Limited User" },
-  ];
-  const discountOptions = [
-    { value: "percentage", label: "Percentage" },
-    { value: "Number", label: "Number" },
-  ];
-
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [period, setPeriod] = useState("");
@@ -25,8 +12,6 @@ const SubscriptionModal = (props) => {
   const [tax, setTax] = useState("");
   const [TotalAmount, setTotalAmount] = useState("");
   const [selectedOption, setSelectedOption] = useState('');
-  // const [inputText, setInputText] = useState('');
-  // const [listItems, setListItems] = useState([]);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -40,9 +25,6 @@ const SubscriptionModal = (props) => {
     // Filter out empty lines
     const nonEmptyLines = await lines.filter((line) => line !== '');
 
-    // Set the list of items in the state
-    // setListItems(nonEmptyLines);
-    // console.log(nonEmptyLines);
 
     const obj = {
       name,
@@ -83,6 +65,7 @@ const SubscriptionModal = (props) => {
             <input
               type="text"
               className="modal1-type1"
+              style={{width:"375px"}}
               placeholder="Name"
               onChange={(e) => {
                 setName(e.target.value);
@@ -92,7 +75,7 @@ const SubscriptionModal = (props) => {
           </div>
           <div className="content1-wrapper1-1">
 
-            <div className="modal1-discount1-div1" style={{ width: "50%", }}>
+            <div className="modal1-discount1-div1" style={{ width: "50%" }}>
               <h5 className="modal1-discount1-name1">Amount</h5>
               <input
                 type="text"
@@ -104,7 +87,7 @@ const SubscriptionModal = (props) => {
               />
             </div>
 
-            <div className="modal1-validity1-div1" style={{ width: "50%" }}>
+            <div className="modal1-validity1-div1" style={{ width: "50%", marginLeft:"5px"}}>
               <h5 className="modal1-validity1-name1">Period</h5>
               <select  className="modal1-validity2" onChange={(e) => {
                   setPeriod(e.target.value);
@@ -113,18 +96,6 @@ const SubscriptionModal = (props) => {
                 <option value="Month">Month</option>
                 <option value="Year">Year</option>
               </select>
-
-
-
-
-              {/* <input
-                type="text"
-                className="modal1-validity1"
-                placeholder="Per month"
-                onChange={(e) => {
-                  setPeriod(e.target.value);
-                }}
-              /> */}
             </div>
           </div>
           <div className="content1-wrapper1-4">
@@ -142,9 +113,9 @@ const SubscriptionModal = (props) => {
             <textarea
               value={feature}
               type="text"
-              className="modal1-type1"
+              className="modal1-type2"
               placeholder="example"
-
+              style={{ width:"375px"}}
               onChange={(e) => {
                 setFeature(e.target.value);
               }}
@@ -153,7 +124,7 @@ const SubscriptionModal = (props) => {
           </div>
           <div className="content1-wrapper1-1">
 
-            <div className="modal1-discount1-div1">
+            <div className="modal1-discount1-div1"  style={{ width:"50%"}}>
               <h5 className="modal1-discount1-name1">Tax regime</h5>
               <input
                 type="text"
@@ -165,11 +136,12 @@ const SubscriptionModal = (props) => {
               />
             </div>
 
-            <div className="modal1-validity1-div1">
+            <div className="modal1-validity1-div1" style={{ width:"50%"}}>
               <h5 className="modal1-validity1-name1">Total amount</h5>
               <input
                 type="text"
                 className="modal1-validity1"
+               
                 onChange={(e) => {
                   setTotalAmount(e.target.value);
                 }}
