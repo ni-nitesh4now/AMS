@@ -37,7 +37,6 @@ const Coupon = () => {
   const dataHandler = async (submitData) => {
     console.log("Data being sent to server:", submitData); 
     handleClose();
-    handleClose();
     try {
       const response = await createCoupon(submitData);
       setCoupons((prev) => [response, ...prev]);
