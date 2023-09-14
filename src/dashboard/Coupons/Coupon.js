@@ -15,9 +15,11 @@ const Coupon = () => {
 
   const [discount, setDiscount] = useState("");
   const [validity, setValidity] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("Percentage");
   const [code, setCode] = useState("");
   const [description, setDescription] = useState("");
+  const [limit, setLimit] = useState("");
+  const [limit_type, setLimitType] = useState("first users");
 
   useEffect(() => {
     getAllCoupons()
@@ -33,7 +35,7 @@ const Coupon = () => {
   const handleShow = () => setShowModal(true);
 
   const dataHandler = async (submitData) => {
-    console.log("Data being sent to server:", submitData); // Add this line for debugging
+    console.log("Data being sent to server:", submitData); 
     handleClose();
     handleClose();
     try {
@@ -67,6 +69,8 @@ const Coupon = () => {
       type,
       code,
       description,
+      limit, 
+      limit_type,
     };
     dataHandler(obj);
     setDiscount("");
@@ -74,6 +78,8 @@ const Coupon = () => {
     setType("");
     setCode("");
     setDescription("");
+    setLimit(""); 
+    setLimitType("first users"); 
     setShowModal(false);
   };
 
@@ -124,7 +130,6 @@ const Coupon = () => {
               <br />
               <b>Create new Coupon</b>
             </button>
-
             {showModal && (
               <div className="modal-wrapper">
                 <div className="modal-content">
@@ -141,7 +146,42 @@ const Coupon = () => {
                         }}
                       />
                     </div>
-
+                    <div className="modal-validity-div">
+                      <h5 className="modal-type-name">Type</h5>
+                      <select
+                        className="modal-validit"
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                      >
+                        <option value="Percentage">Percentage</option>
+                        <option value="Amount">Amount</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="content-wrapper-1">
+                    <div className="modal-discount-div">
+                      <h5 className="modal-discount-name">Limit</h5>
+                      <input
+                        type="number"
+                        className="modal-discount"
+                        placeholder="Enter limit"
+                        value={limit}
+                        onChange={(e) => setLimit(e.target.value)}
+                      />
+                    </div>
+                    <div className="modal-validity-div">
+                      <h5 className="modal-type-name">Limit Type</h5>
+                      <select
+                        className="modal-discount-type"
+                        value={limit_type}
+                        onChange={(e) => setLimitType(e.target.value)}
+                      >
+                        <option value="first users">First users</option>
+                        <option value="Times per user">Times per user</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="content-wrapper-2">
                     <div className="modal-validity-div">
                       <h5 className="modal-validity-name">Validity</h5>
                       <input
@@ -152,22 +192,6 @@ const Coupon = () => {
                         }}
                       />
                     </div>
-                  </div>
-                  <div className="content-wrapper-2">
-                    <h5 className="modal-type-name">Type</h5>
-                    <input
-                      type="text"
-                      className="modal-type"
-                      list="cityname"
-                      placeholder="example"
-                      onChange={(e) => {
-                        setType(e.target.value);
-                      }}
-                    />
-                    <datalist id="cityname">
-                      <option value="New Delhi"></option>
-                      <option value="Mumbai"></option>
-                    </datalist>
                   </div>
                   <div className="content-wrapper-3">
                     <h5 className="modal-code-name">Create Code</h5>
@@ -230,9 +254,12 @@ const Coupon = () => {
                     fontFamily: "Poppins",
                   }}
                 >
-                  <b>{couponData?.discount ?? ""}</b>
+                  <b>
+                    {couponData?.type === "Percentage"
+                      ? `${couponData?.discount ?? ""}%`
+                      : `₹${couponData?.discount ?? ""}`}
+                  </b>
                 </p>
-
                 <p
                   style={{
                     color: "#A9A9B1",
@@ -250,12 +277,11 @@ const Coupon = () => {
                   }}
                 >
                   <b>{couponData?.coupon_code ?? "-"}</b>{" "}
-                  {/* Use the correct property name */}
                 </p>
                 <p className="left-entry">
                   <small>Count</small>
                   <br />
-                  {couponData?.limit ?? 0} {/* Use the correct property name */}
+                  {couponData?.limit ?? 0} {couponData?.limit_type ?? "-"}
                 </p>
                 <p className="right-entry">
                   <small>Validity</small>

@@ -279,8 +279,8 @@ def generate_coupon():
         coupon_code = request.json['code']
         coupon_type = request.json['type']
         discount = request.json['discount']
-        limit=5
-        limit_type="xyz"
+        limit=request.json['limit']
+        limit_type=request.json['limit_type']
         expire_date = request.json['validity']
         description = request.json['description']
 
