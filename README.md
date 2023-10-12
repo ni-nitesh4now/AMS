@@ -39,7 +39,6 @@ python admin_power.py
 ```
 
 
-# Description:
 ## UI Views
 
 ### Dashboard View
