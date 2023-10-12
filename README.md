@@ -1,3 +1,25 @@
+# About the project:
+The project can be described succinctly in three key points:
+
+## Role-Based Application Management:
+
+ - The project implements a Flask-based backend to manage diverse user roles, including students, teachers, parents, and management personnel.
+
+ - User entities can be retrieved, updated, and blocked, ensuring fine-grained control over user access and permissions within the application.
+
+## Subscription and Coupon System:
+
+ - The application features a robust subscription management system where administrators can create, modify, and delete subscription plans. Each plan includes details like name, amount, period, and features.
+
+ - Additionally, a flexible coupon management system allows the generation of unique coupons with specific codes, discounts, limits, and expiration dates. Existing coupons can be updated or deleted as needed.
+   
+## Cross-Origin Resource Sharing and Data Calculations:
+
+ - The project implements Cross-Origin Resource Sharing (CORS) to facilitate secure communication between the frontend and backend, enabling seamless interaction from different origins.
+
+ - The backend includes functions for date formatting and tax calculations, essential for accurate financial transactions and presenting information to users.
+
+
 # Commands to start
 
 ## Front-end
